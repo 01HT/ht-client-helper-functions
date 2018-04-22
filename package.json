@@ -1,0 +1,9 @@
+{
+  "name": "ht-client-helper-functions",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/maksimyurkov/ht-client-helper-functions",
+  "author": "maksimyurkov <yurkov.maksim.sergeevich@gmail.com>",
+  "license": "MIT",
+  "dependencies": {}
+}
