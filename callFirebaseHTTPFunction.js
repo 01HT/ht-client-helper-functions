@@ -1,5 +1,5 @@
 "use strict";
-export async function callFirebaseHTTPFunction(functionOptions) {
+async function callFirebaseHTTPFunction(functionOptions) {
   try {
     let { name, options, authorization } = functionOptions;
     let fetchOptions = {};
@@ -19,3 +19,5 @@ export async function callFirebaseHTTPFunction(functionOptions) {
     throw new Error("callFirebaseHTTPFunction: " + error.message);
   }
 }
+
+export { callFirebaseHTTPFunction };
