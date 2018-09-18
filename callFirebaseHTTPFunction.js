@@ -10,7 +10,7 @@ async function callFirebaseHTTPFunction(functionOptions) {
       fetchOptions.headers["Authorization"] = token;
     }
     let response = await fetch(
-      `https://us-central1-api-01-ht.cloudfunctions.net/${name}`,
+      `https://${window.functionsRegion}-api-01-ht.cloudfunctions.net/${name}`,
       fetchOptions
     );
     let data = await response.json();
