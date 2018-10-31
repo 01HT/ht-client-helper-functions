@@ -4,11 +4,15 @@ async function callFirebaseHTTPFunction(functionOptions) {
     let { name, options, authorization } = functionOptions;
     let fetchOptions = {};
     if (options) fetchOptions = options;
+    let headers = new Headers();
+    if (fetchOptions.headers) {
+      headers = new Headers(fetchOptions.headers);
+    }
     if (authorization) {
       let token = "Bearer " + (await firebase.auth().currentUser.getIdToken());
-      if (!fetchOptions.headers) fetchOptions.headers = {};
-      fetchOptions.headers["Authorization"] = token;
+      headers.set("Authorization", token);
     }
+    fetchOptions.headers = headers;
     let response = await fetch(
       `https://${window.functionsRegion}-api-01-ht.cloudfunctions.net/${name}`,
       fetchOptions
