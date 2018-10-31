@@ -10,7 +10,7 @@ async function callTestHTTPFunction(functionOptions) {
       fetchOptions.headers["Authorization"] = token;
     }
     let response = await fetch(
-      `http://localhost:5000/api-01-ht/${window.functionsRegion}/${name}`,
+      `http://localhost:5000/api-01-ht/us-central1/${name}`,
       fetchOptions
     );
     let data = await response.json();
