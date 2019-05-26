@@ -15,7 +15,7 @@ async function callFirebaseHTTPFunction(functionOptions) {
     fetchOptions.headers = headers;
     let response = await fetch(
       `https://${window.functionsRegion}-${
-        window.projectId
+        window.config.projectId
       }.cloudfunctions.net/${name}`,
       fetchOptions
     );
