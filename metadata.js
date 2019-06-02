@@ -47,54 +47,50 @@ export const updateMetadata = ({
   url,
   image,
   imageAlt,
-  canonical
+  canonical,
+  noindex
 }) => {
-  if (title) {
-    document.title = title;
-    _setMeta("property", "og:title", title);
-  }
+  // title
+  document.title = title;
+  _updateMeta("meta", { property: "og:title", content: title });
 
-  if (description) {
-    _setMeta("name", "description", description);
-    _setMeta("property", "og:description", description);
-  }
+  // description
+  _updateMeta("meta", { name: "description", content: description });
+  _updateMeta("meta", { property: "og:description", content: description });
 
-  if (description == "") {
-    let element = document.head.querySelector(`meta[name="description"]`);
-    if (element) document.head.removeChild(element);
-  }
+  // og:
+  _updateMeta("meta", { property: "og:image", content: image });
+  _updateMeta("meta", { property: "og:image:alt", content: imageAlt });
+  _updateMeta("meta", {
+    property: "og:url",
+    content: canonical || url || window.location.href
+  });
 
-  if (image) {
-    _setMeta("property", "og:image", image);
-  }
+  // noindex
+  _updateMeta("meta", { name: "robots", content: noindex });
 
-  if (imageAlt) {
-    _setMeta("property", "og:image:alt", imageAlt);
-  } else {
-    _setMeta("property", "og:image:alt", "");
-  }
-
-  url = canonical || url || window.location.href;
-  _setMeta("property", "og:url", url);
-
-  // Update canonical
-  let linkCanonical = document.querySelector('link[rel="canonical"]');
-  if (linkCanonical) document.head.removeChild(linkCanonical);
-
-  if (canonical) {
-    let linkCanonical = document.createElement("link");
-    linkCanonical.setAttribute("rel", "canonical");
-    linkCanonical.setAttribute("href", canonical);
-    document.head.appendChild(linkCanonical);
-  }
+  // canonical
+  _updateMeta("link", { rel: "canonical", href: canonical });
 };
 
-function _setMeta(attrName, attrValue, content) {
-  let element = document.head.querySelector(`meta[${attrName}="${attrValue}"]`);
-  if (!element) {
-    element = document.createElement("meta");
-    element.setAttribute(attrName, attrValue);
+function _updateMeta(tagName, attributes) {
+  let firstAttributeName = Object.keys(attributes)[0];
+  let firstAttributeValue = attributes[Object.keys(attributes)[0]];
+  let secondAttributeValue = attributes[Object.keys(attributes)[1]];
+  let metaExist =
+    secondAttributeValue !== undefined && secondAttributeValue !== "";
+  let element = document.querySelector(
+    `${tagName}[${firstAttributeName}="${firstAttributeValue}"]`
+  );
+  if (!metaExist) {
+    if (element) element.parentNode.removeChild(element);
+  } else {
+    if (!element) {
+      element = document.createElement(tagName);
+    }
+    for (let name in attributes) {
+      element.setAttribute(name, attributes[name]);
+    }
     document.head.appendChild(element);
   }
-  element.setAttribute("content", content || "");
 }
