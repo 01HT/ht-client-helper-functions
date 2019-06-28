@@ -32,7 +32,7 @@ export const getMetaDescriptionFromQuillObject = quillObject => {
         description.length < 120 &&
         part.insert &&
         typeof part.insert === "string" &&
-        part.insert !== "\n"
+        part.insert.trim() !== ""
       ) {
         description += ` ${part.insert}`;
       }
