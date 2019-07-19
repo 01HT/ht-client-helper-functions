@@ -1,7 +1,13 @@
 "use strict";
 async function callFirebaseHTTPFunction(functionOptions) {
   try {
-    let { name, options, authorization } = functionOptions;
+    let {
+      name,
+      options,
+      authorization,
+      functionsRegion,
+      projectId
+    } = functionOptions;
     let fetchOptions = {};
     if (options) fetchOptions = options;
     let headers = new Headers();
@@ -14,8 +20,8 @@ async function callFirebaseHTTPFunction(functionOptions) {
     }
     fetchOptions.headers = headers;
     let response = await fetch(
-      `https://${window.functionsRegion}-${
-        window.projectId
+      `https://${functionsRegion ? functionsRegion : window.functionsRegion}-${
+        projectId ? projectId : window.projectId
       }.cloudfunctions.net/${name}`,
       fetchOptions
     );

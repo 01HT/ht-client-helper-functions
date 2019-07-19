@@ -1,7 +1,13 @@
 "use strict";
 async function callTestHTTPFunction(functionOptions) {
   try {
-    let { name, options, authorization } = functionOptions;
+    let {
+      name,
+      options,
+      authorization,
+      functionsRegion,
+      projectId
+    } = functionOptions;
     let fetchOptions = {};
     if (options) fetchOptions = options;
     let headers = new Headers();
@@ -14,7 +20,11 @@ async function callTestHTTPFunction(functionOptions) {
     }
     fetchOptions.headers = headers;
     let response = await fetch(
-      `http://localhost:5000/${window.projectId}/us-central1/${name}`,
+      `http://localhost:5000/${
+        functionsRegion ? functionsRegion : window.functionsRegion
+      }-${projectId ? projectId : window.projectId}/${
+        functionsRegion ? functionsRegion : window.functionsRegion
+      }/${name}`,
       fetchOptions
     );
     let data = await response.json();
