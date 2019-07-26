@@ -20,9 +20,7 @@ async function callTestHTTPFunction(functionOptions) {
     }
     fetchOptions.headers = headers;
     let response = await fetch(
-      `http://localhost:5000/${
-        functionsRegion ? functionsRegion : window.functionsRegion
-      }-${projectId ? projectId : window.projectId}/${
+      `http://localhost:5000/${projectId ? projectId : window.projectId}/${
         functionsRegion ? functionsRegion : window.functionsRegion
       }/${name}`,
       fetchOptions
