@@ -20,8 +20,8 @@ async function callFirebaseHTTPFunction(functionOptions) {
     }
     fetchOptions.headers = headers;
     let response = await fetch(
-      `https://${functionsRegion ? functionsRegion : window.functionsRegion}-${
-        projectId ? projectId : window.projectId
+      `https://${functionsRegion ? functionsRegion : "us-central1"}-${
+        projectId ? projectId : window.appConfig.projectId
       }.cloudfunctions.net/${name}`,
       fetchOptions
     );
